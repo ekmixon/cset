@@ -1,0 +1,67 @@
+﻿@using CSETWebCore.Business.Reports
+@model MaturityBasicReportData
+
+@*Using embedded styles because this page will just be converted straight to pdf.*@
+<style>
+    #deficiency-report {
+        text-align: center;
+    }
+</style>
+
+<div id="deficiency-report" class="d-flex flex-column">
+    <div id="deficiency-report-title" class="d-flex flex-column">
+        <h1>DEFICIENCY REPORT EDM</h1>
+        <img width="471" height="529"src="@TempData["Links"]/images/ExecutiveFiles/image002.jpg">
+        <div class="d-flex flex-row">
+            <img style="height: 7rem" alt="CISA Logo" src="@TempData["Links"]/images/CISA_Logo_183px.png">
+            <div>
+                <p>@Model.Information.Assessment_Name</p>
+                <p>@DateTime.Parse(Model.Information.Assessment_Date).ToString("dd-MMM-yyyy")</p>
+                <p>@Model.Information.Assessor_Name</p>
+            </div>
+        </div>
+    </div>
+    <div id="deficiency-report-summary">
+        <p>
+            This deficiency report lists the statements that are not currently compliant or "No" answers.
+        </p>
+        <p>
+            This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
+            the report in identifying gaps, prioritizing work, and beginning to make a plan to address
+            the gaps by implementing the controls necessary to come into compliance with the associated statement.
+        </p>
+        <p>
+            The percentage gap in each domain is also listed and will help to determine the priority.
+            EDM is a cumulative maturity model meaning lower levels should be completed before
+            moving to higher levels. Ideally baseline should be completed before focusing efforts on
+            controls in evolving and so forth up the line of maturity levels.
+        </p>
+    </div>
+    <div id="deficiency-report-data">
+        <div id="deficiency-report-data-head">
+            <h2>Deficiencies</h2>
+            <span>
+                Marked for Review - <img class="MarkedFlag" 
+                                         src="../../../assets/images/icons/MarkedFlag.png" 
+                                         alt="marked for review">
+            </span>
+        </div>
+        @{ 
+            if (Model.DeficienciesList.Count == 0)
+            {
+                <div class="deficiency-report-entry">
+                    <p>There are no deficiencies to display.</p>
+                </div>
+            }
+            else
+            {
+                foreach (var deficiciency in Model.DeficienciesList)
+                {
+                    <div class="deficiency-report-entry">
+                        <p>PLACEHOLDER - Deficiency Here!</p>
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
