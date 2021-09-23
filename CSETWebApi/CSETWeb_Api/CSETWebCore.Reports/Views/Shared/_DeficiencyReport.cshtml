@@ -1,4 +1,5 @@
 ﻿@using CSETWebCore.Business.Reports
+@using System.Text.RegularExpressions 
 @model MaturityBasicReportData
 
 @*Using embedded styles because this page will just be converted straight to pdf.*@
@@ -79,7 +80,9 @@
                                 <h3 class="small">Practice @deficiciency.Mat.Question_Title</h3>
                             </div>
                             <div class="col-7">
-                                <p>@deficiciency.Mat.Question_Text</p>
+                                <p>
+                                    @Regex.Split(deficiciency.Mat.Question_Text, @"(?<=^\S+)\s")[1]
+                                </p>
                             </div>
                             <div class="col-2">
                                 <p>@deficiciency.ANSWER.Answer_Text</p>
