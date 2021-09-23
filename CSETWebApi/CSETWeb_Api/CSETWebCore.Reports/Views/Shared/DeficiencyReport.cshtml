@@ -61,6 +61,42 @@
         </div>
     </div>
     @{ 
+        // Helper function copied from frontend
+        string scrubGlossaryMarkup(string unformatted)
+        {
+            if (unformatted.IndexOf("[[") < 0)
+            {
+                return unformatted;
+            }
+
+            var formatted = "";
+            var pieces = unformatted.Split("]]");
+            foreach (var piece in pieces) {
+                var startPos = piece.LastIndexOf("[[");
+                if (startPos >= 0)
+                {
+                    var leadingText = piece.Substring(0, startPos);
+                    var term = piece.Substring(startPos + 2);
+                    var displayWord = term;
+
+                    if (term.IndexOf('|') > 0)
+                    {
+                        var p = term.Split('|');
+                        term = p[0];
+                        displayWord = p[1];
+                    }
+
+                    formatted += leadingText + displayWord;
+                }
+                else
+                {
+                    formatted += piece;
+                }
+            }
+
+            return formatted;
+        }
+
         if (Model.DeficienciesList.Count == 0)
         {
             <div class="row">
@@ -81,11 +117,13 @@
                             </div>
                             <div class="col-7">
                                 <p>
-                                    @Regex.Split(deficiciency.Mat.Question_Text, @"(?<=^\S+)\s")[1]
+                                    @Regex.Split(scrubGlossaryMarkup(deficiciency.Mat.Question_Text), @"(?<=^\S+)\s")[1]
                                 </p>
                             </div>
                             <div class="col-2">
-                                <p>@deficiciency.ANSWER.Answer_Text</p>
+                                <p>
+                                    @deficiciency.ANSWER.Answer_Text
+                                </p>
                             </div>
                         </div>
                         <div class="row border rounded-3 bg-opacity-10" style="background-color: #d6d8db;">
