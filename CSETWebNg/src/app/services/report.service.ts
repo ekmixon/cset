@@ -62,8 +62,15 @@ export class ReportService {
             this.reportsUrl + 'getPdf?view='+ pdfString +'&security=' + security,
             {responseType:"blob", headers: headers.headers, params: headers.params}
           );
-      }
+    }
     
+    public getEdmDeficiencyPdf() {
+        return this.http.get(
+            this.reportsUrl + "getDeficiencyPdf",
+            {responseType:"blob", headers: headers.headers, params: headers.params}
+        );
+    }
+
     public getSecurityIdentifiers(){
         return this.http.get(this.apiUrl + 'reports/getconfidentialtypes');
     }

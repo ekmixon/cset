@@ -118,6 +118,12 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         });
     }
 
+    clickDeficiencyLink() {
+        this.reportSvc.getEdmDeficiencyPdf().subscribe(data => {
+            saveAs(data, "edmDeficiency.pdf");
+        });
+    }
+
     /**
      * If all ACET statements are not answered, set the 'disable' flag
      * to true.  
